@@ -15,11 +15,13 @@ export class KeyService {
     const user = await this.userRepository.findOne({id})
     console.log(user)
 
+    console.log(key)
+
     const qtdKeys = key.length
 
     if (user) {
        
-      const chavesExistentes = await this.userRepository.findOne(id, {relations:['chaves']})
+      const chavesExistentes = await this.userRepository.findOne(id, {relations:['keys']})
 
       const verifyQtdKeys = chavesExistentes.keys.map((a) => a)
 

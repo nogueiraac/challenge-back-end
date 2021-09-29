@@ -6,7 +6,7 @@ import { Body,
 import { User } from 'src/user/entity/user';
 import { TransferService } from './transfer.service';
 
-@Controller('tranfer')
+@Controller('transfer')
 export class TransferController {
   constructor(
     private readonly transferService: TransferService

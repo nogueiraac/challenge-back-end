@@ -1,10 +1,6 @@
 import { TransferModule } from './transfer/transfer.module';
-import { TransferService } from './transfer/transfer.service';
-import { TransferController } from './transfer/transfer.controller';
 import { KeyModule } from './key/key.module';
-import { KeyController } from './key/key.controller';
 import { UserModule } from './user/user.module';
-import { UserController } from './user/user.controller';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
