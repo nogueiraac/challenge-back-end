@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, NotAcceptableException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Key } from './entity/key';
@@ -11,11 +11,8 @@ export class KeyService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
 
-  async createKey(id: number, key:string[]) {
+  async createKey(id: number, key:string[]) { 
     const user = await this.userRepository.findOne({id})
-    console.log(user)
-
-    console.log(key)
 
     const qtdKeys = key.length
 
@@ -28,18 +25,18 @@ export class KeyService {
       if ( qtdKeys <= 3 ) {
         if(verifyQtdKeys.length + qtdKeys <= 3) {
           const keys = key.map((value) => this.keyRepository.create({value, user}))
-        
+          
           return this.keyRepository.save(keys)
-        } else {
-          console.log("Quantidade maior que 3")
-        }
-        
-        
-      } else {
-        console.log('Pode cadastrar apenas 3 chaves por cliente')
+        } 
+        if(verifyQtdKeys.length + qtdKeys > 3) {
+          throw new NotAcceptableException("Quantidade de tags excede o valor máximo de 3 chaves por usuário")
+        }  
+      } 
+      if(qtdKeys > 3) {
+        throw new NotAcceptableException("Quantidade de tags excede o valor máximo de 3 chaves por usuário")
       }
     }else {
-      throw new NotFoundException(`Usuário ID ${id} não encontrado`);
+      throw new NotFoundException(`Usuário não encontrado`);
     }
   }
 }

@@ -14,7 +14,6 @@ export class UserController {
 
   @Post()
   createUser(@Body() userDto: UserDto) {
-    console.log(userDto)
     return this.userService.createUser(userDto);
   }
 
